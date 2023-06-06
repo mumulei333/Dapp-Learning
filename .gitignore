@@ -42,3 +42,4 @@ yarn-error.log*
 .idea
 .vscode
 mnemonic.txt
+basic/01-web3js-deploy/.env.example

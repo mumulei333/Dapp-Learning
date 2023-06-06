@@ -8,7 +8,7 @@ const privatekey = process.env.PRIVATE_KEY;
    -- Define Provider & Variables --
 */
 
-const receiver = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
+const receiver = '0xC74c341793536943a20C4D8f42272c932b4884F2';
 
 // Provider
 const web3 = new Web3(
@@ -45,7 +45,7 @@ const Trans = async () => {
   // Create Constructor Tx
   const deployTx = deployContract.deploy({
     data: bytecode,
-    arguments: ['DAPPLEARNING', 'DAPP', 0, 10000000],
+    arguments: ['DAPPLEARNING', 'SETH', 0, 10000000],
   });
 
   // Sign Transacation and Send

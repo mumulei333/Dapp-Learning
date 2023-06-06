@@ -19,9 +19,12 @@ async function main() {
 
   console.log('Account balance:', (await deployer.getBalance()).toString())
 
-  const Token = await ethers.getContractFactory('SimpleToken')
-  const token = await Token.deploy('Hello', 'Token', 1, 10000)
-  await token.deployed()
+  // const Token = await ethers.getContractFactory('SimpleToken')
+  // const token = await Token.deploy('Hello', 'Token', 1, 10000)
+  // await token.deployed()
+
+  // 避免重复部署浪费测试币
+  const token = await ethers.getContractAt('SimpleToken', "0x512fF44311a75097cE73Feed2Fb8Bd8ca5C6FBCc")
 
   console.log('SimpleToken address:', token.address)
 

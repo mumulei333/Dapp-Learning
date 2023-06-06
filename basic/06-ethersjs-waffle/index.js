@@ -57,7 +57,7 @@ async function deploy() {
   );
   token = await simpletoken.deploy("HEHE", "HH", 1, 100000000);
   tx = await token.transfer(
-    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "0xC74c341793536943a20C4D8f42272c932b4884F2",
     ethers.utils.parseEther("0.00000000001"),
     option
   );

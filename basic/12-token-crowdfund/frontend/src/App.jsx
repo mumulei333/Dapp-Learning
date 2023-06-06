@@ -20,11 +20,12 @@ const { VITE_INFURA_ID, VITE_PRIVATE_KEY, VITE_CONTRACT_ADDRESS } = import.meta.
 
 // In here we init web3Provider with infura network and set wallet to connect it
 // if you prefer Matamask use lines 24 , 25 to replace lines 26, 27   
-//
-// const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-// const wallet = web3Provider.getSigner();
-const web3Provider = new ethers.providers.InfuraProvider('rinkeby', VITE_INFURA_ID);
-const wallet = new ethers.Wallet(VITE_PRIVATE_KEY, web3Provider);
+// 小狐狸链接前面钱包方式
+window.ethereum.request({ method: 'eth_requestAccounts' });
+const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+const wallet = web3Provider.getSigner(0);
+// const web3Provider = new ethers.providers.InfuraProvider(5, VITE_INFURA_ID);
+// const wallet = new ethers.Wallet(VITE_PRIVATE_KEY, web3Provider);
 
 // Get instance of our crowdFund contract
 const instance = new ethers.Contract(VITE_CONTRACT_ADDRESS, crowdFundABI.abi, wallet);
@@ -191,7 +192,6 @@ function App() {
   // and save them to projectCon
   const getProjects = async () => {
     let arr = await instance.returnAllProjects();
-    console.log('updating...');
     setProjectCon(arr.map((e) => new ethers.Contract(e, projectABI.abi, wallet)));
   };
 

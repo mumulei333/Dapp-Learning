@@ -23,7 +23,7 @@ import { NoTokensMessage } from './NoTokensMessage'
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
-const HARDHAT_NETWORK_ID = '42'
+const HARDHAT_NETWORK_ID = '5'
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001
@@ -109,7 +109,7 @@ export class Dapp extends React.Component {
               Welcome <b>{this.state.selectedAddress}</b>, you have{' '}
               <b>
                 {/* show human read balance (deployed contract with precise 1 in /scripts/deploy.js) */}
-                {this.state.balance/10**this.state.decimals} {this.state.tokenData.symbol}
+                {ethers.utils.formatUnits(this.state.balance, this.state.decimals)} {this.state.tokenData.symbol}
               </b>
               .
             </p>
@@ -162,7 +162,7 @@ export class Dapp extends React.Component {
               <Transfer
                 transferTokens={(to, amount) =>
                   // convert to contract precise amount
-                  this._transferTokens(to, amount*10**this.state.decimals)
+                  this._transferTokens(to, ethers.utils.parseUnits(amount, this.state.decimals))
                 }
               />
             )}
@@ -194,6 +194,8 @@ export class Dapp extends React.Component {
     }
 
     this._initialize(selectedAddress)
+
+    console.log(`this.state.balance: ${this.state.balance}`)
 
     // We reinitialize it whenever the user changes their account.
     window.ethereum.on('accountsChanged', ([newAddress]) => {
@@ -280,13 +282,15 @@ export class Dapp extends React.Component {
     const balance = await this._simpleToken.balanceOf(
       this.state.selectedAddress
     )
-    this.setState({ balance })
+    console.log(`balance : ${balance}`)
+    this.setState({ balance: balance })
   }
 
   // This method sends an ethereum transaction to transfer tokens.
   // While this action is specific to this application, it illustrates how to
   // send a transaction.
   async _transferTokens(to, amount) {
+    
     // Sending a transaction is a complex operation:
     //   - The user can reject it
     //   - It can fail before reaching the ethereum network (i.e. if the user
@@ -301,11 +305,12 @@ export class Dapp extends React.Component {
     // do it.
 
     try {
+      console.log(`this.state.balance: ${this.state.balance}`)
       // If a transaction fails, we save that error in the component's state.
       // We only save one such error, so before sending a second transaction, we
       // clear it.
       this._dismissTransactionError()
-
+      console.log(`to: ${to}, amount: ${amount}`)
       // We send the transaction, and save its hash in the Dapp's state. This
       // way we can indicate that we are waiting for it to be mined.
       const tx = await this._simpleToken.transfer(to, amount)
@@ -375,7 +380,7 @@ export class Dapp extends React.Component {
     }
 
     this.setState({
-      networkError: 'Please connect Metamask to kovan',
+      networkError: 'Please connect Metamask to goerli',
     })
 
     return false

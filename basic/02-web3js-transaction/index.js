@@ -42,27 +42,32 @@ const Trans = async () => {
   console.log(`Attempting to deploy from account ${account.address}`);
 
   // Create Contract Instance
-  const deployContract = new web3.eth.Contract(abi);
+  // const deployContract = new web3.eth.Contract(abi); 避免重复部署浪费测试费用 -- start
 
-  // Create Deployment Tx
-  const deployTx = deployContract.deploy({
-    data: bytecode,
-    arguments: [5],
-  });
+  // // Create Deployment Tx
+  // const deployTx = deployContract.deploy({
+  //   data: bytecode,
+  //   arguments: [5],
+  // });
 
-  // Sign Tx
-  const createTransaction = await web3.eth.accounts.signTransaction(
-    {
-      data: deployTx.encodeABI(),
-      gas: 8000000,
-    },
-    account_from.privateKey
-  );
+  // // Sign Tx
+  // const createTransaction = await web3.eth.accounts.signTransaction(
+  //   {
+  //     data: deployTx.encodeABI(),
+  //     gas: 8000000,
+  //   },
+  //   account_from.privateKey
+  // );
 
-  // Get Transaction Receipt
-  const createReceipt = await web3.eth.sendSignedTransaction(
-    createTransaction.rawTransaction
-  );
+  // // Get Transaction Receipt
+  // const createReceipt = await web3.eth.sendSignedTransaction(
+  //   createTransaction.rawTransaction
+  // ); 避免重复部署浪费测试费用 -- end
+
+  const createReceipt = {}
+  createReceipt.blockNumber = 9090681
+  createReceipt.contractAddress = '0x930dc8ef45fbf5c7AAbC040220323c4F0Da3dE3B'
+
   console.log(`Contract deployed at address: ${createReceipt.contractAddress}`);
 
   const deployedBlockNumber = createReceipt.blockNumber;
@@ -94,7 +99,7 @@ const Trans = async () => {
   console.log(
     '============================ 3. Call Contract Interface increment'
   );
-  const _value = 3;
+  const _value = 5;
   let incrementTx = incrementer.methods.increment(_value);
 
   // Sign with Pk

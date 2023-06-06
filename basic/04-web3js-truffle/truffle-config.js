@@ -27,14 +27,14 @@ module.exports = {
     //    network_id: "*"
     //  }
     //},
-    ropsten: {
+    goerli: {
       provider: () =>
         new HDWalletProvider(
           process.env.PRIVATE_KEY,
-          'https://ropsten.infura.io/v3/' + process.env.INFURA_ID
+          'https://goerli.infura.io/v3/' + process.env.INFURA_ID
         ),
-      network_id: '*',
-      gas: 3000000,
+      network_id: '5',
+      gas: 8000000,
       gasPrice: 10000000000,
     },
     kovan: {

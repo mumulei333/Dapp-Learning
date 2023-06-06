@@ -26,13 +26,13 @@ Waffle 详细使用方法可以参考 [Waffle 官网](https://ethereum-waffle.re
 - 1 安装依赖
 
 ```bash
-yarn install
+npm install --save-dev ethereum-waffle
 ```
 
 - 2 编译合约
 
 ```bash
-yarn build
+npm run build
 ```
 
 - 3 配置环境变量
@@ -46,7 +46,7 @@ cp .env.example .env
 - 4 执行测试
 
 ```bash
-yarn test
+npm test
 ```
 
 - 5 测试 index.js
@@ -55,6 +55,7 @@ yarn test
 node index.js
 ```
 ## 说明
+这里更新使用了npm命令
 在使用命yarn install命令，提示无法找到yarn命令时（比如在VMware上跑），可以尝试执行：
 1. $ sudo wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.rep
 2. $ sudo yum install yarn

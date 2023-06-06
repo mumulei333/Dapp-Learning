@@ -12,12 +12,15 @@ async function main() {
 
   console.log('Account balance:', (await deployer.getBalance()).toString());
 
-  const Token = await ethers.getContractFactory('SimpleToken');
-  const token = await Token.deploy('HHToken', 'HHT', 1, 100000000);
+  // const Token = await ethers.getContractFactory('SimpleToken');
+  // const token = await Token.deploy('HHToken', 'HHT', 1, 100000000);
+
+  // 避免重复部署浪费测试币
+  token = await ethers.getContractAt('SimpleToken', "0x512fF44311a75097cE73Feed2Fb8Bd8ca5C6FBCc")
 
   console.log('Contract address:', token.address);
 
-  const receiver = '0x35D4A3Bd19382e5180824823E90312Be405c3707';
+  const receiver = '0xC74c341793536943a20C4D8f42272c932b4884F2';
   console.log('Transfer 50 to receiver ', receiver);
   let transferReceipt = await token.transfer(receiver, 50);
   await transferReceipt.wait();

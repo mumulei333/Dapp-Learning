@@ -14,17 +14,17 @@ VITE_CONTRACT_ADDRESS=zzzzzzzzzzzzz  //合约地址
 
 - 安装依赖
 ```
-yarn
+npm install
 ```
 
 - 启动项目
 ```
-yarn dev
+npm run dev
 ```
 
 - 编译项目
 ```
-yarn build
+npm build
 ```
  
 ## 参考链接
