@@ -1,4 +1,5 @@
 require('@nomiclabs/hardhat-waffle');
+require("@nomicfoundation/hardhat-verify");
 require('dotenv').config();
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -19,7 +20,7 @@ function mnemonic() {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: '0.8.0',
+  solidity: '0.6.2',
   networks: {
     localhost: {
       url: 'http://localhost:8545',
@@ -28,6 +29,10 @@ module.exports = {
         notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
         (you can put in a mnemonic here to set the deployer locally)
       */
+    },
+    taiyi: {
+      url: 'http://119.23.62.206:26688',
+      accounts: [mnemonic()],
     },
     goerli: {
       url: 'https://goerli.infura.io/v3/' + process.env.INFURA_ID, //<---- CONFIG YOUR INFURA ID IN .ENV! (or it won't work)
@@ -50,4 +55,19 @@ module.exports = {
       accounts: [mnemonic()]
     },
   },
+  etherscan: {
+    apiKey: {
+      taiyi: "xxx"
+    },
+    customChains: [
+      {
+        network: "taiyi",
+        chainId: 99199,
+        urls: {
+          apiURL: "https://explorer.taiyi.pub",
+          browserURL: "https://explorer.taiyi.pub"
+        }
+      }
+    ]
+  }
 };
